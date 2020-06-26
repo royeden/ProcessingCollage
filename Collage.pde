@@ -1,27 +1,4 @@
 /*
-  Cómo usar:
-  * En la carpeta donde este guardado el código, crear una carpeta llamada data y ahí agregar las imágenes.
-    Tienen que llamarse todas igual: <nombre> (<número>).<extensión>
-    EJ: "foto (1).jpg"
-  
-  * Revisar las instrucciones para configurar cada sección.
-
-  * Controles:
-    Barra espaciadora: Guardar la imagen.
-    P: Pausa o reanudar.
-    R: Reiniciar y elegir una nueva imagen.
-    T: Pausar captura automática de imagen.
-    Y: No reiniciar la imagen después de guardarla automáticamente.
-    S: Cambiar la forma que se dibuja (al azar, rectángulos, elípses, triángulos o combinaciones entre 2 formas).
-    D: Usar formas regulares o irregulares (cuadrados o rectángulos, círculos o elípses, triángulos equiláteros o triángulos).
-    X: Tomar los recortes en base a la posición del mouse o tomar recortes al azar de imágenes al azar.
-    C: Tomar los recortes en base a un rango alrededor de la posición del mouse o tomar recortes al azar de imágenes al azar.
-    V: Pegar los recortes en base a la posición del mouse o tomar recortes al azar de imágenes al azar.
-    B: Pegar los recortes en base a un rango alrededor de la posición del mouse o tomar recortes al azar de imágenes al azar.
-    N: Pegar los recortes al azar o tomar recortes al azar de imágenes al azar.
-  
-  ---
-
   How to use:
   * In the folder where the code is stored, create a data folder and add the images there.
     All of them have to share the same name: <name> (<número>).<extension>
@@ -45,50 +22,50 @@
 */
 
 
-// IMAGES CONFIG / CONFIGURACIÓN DE IMÁGENES
-int IMAGES_LENGTH = 4; // Amount of images in the data folder / Cantidad de imágenes en la carpeta data
-PImage images[] = new PImage[IMAGES_LENGTH]; // This array holds all the images / Esta lista contiene todas las imágenes
+// IMAGES CONFIG
+int IMAGES_LENGTH = 4; // Amount of images in the data folder
+PImage images[] = new PImage[IMAGES_LENGTH]; // This array holds all the images
 
-// Name shared between images (In this case foto (<number>).jpg) / nombre que comparten todas las imágenes (en este caso foto (<número>).jpg)
+// Name shared between images (In this case foto (<number>).jpg)
 String NAME = "foto";
-String EXTENSION = ".jpg"; // Extension / Extensión
-String SAVE_IMAGE_NAME = "foto "; // Name shared between images (In this case foto (<number>).jpg) / nombre que comparten todas las imágenes (en este caso foto (<número>).jpg)
-String SAVE_IMAGE_EXTENSION = ".jpg"; // Extension / Extensión
+String EXTENSION = ".jpg"; // Extension
+String SAVE_IMAGE_NAME = "foto "; // Name shared between images (In this case foto (<number>).jpg)
+String SAVE_IMAGE_EXTENSION = ".jpg"; // Extension
 
-// All the images in data/ should be named "<NAME> (<number>).<EXTENSION>" / Todas las imágenes en la carpeta data/ deber como foto (<number>).jpg
+// All the images in data/ should be named "<NAME> (<number>).<EXTENSION>"
 String getImage(int index) {
   return NAME + " (" + (index + 1) + ")" + EXTENSION; 
 }
 
-// INITIAL CONFIGURATION / CONFIGURACIÓN INICIAL
-int FRAMERATE = 1; // FPS to calculate the whole algorithm / FPS para calcular de vuelta el algoritmo entero
+// INITIAL CONFIGURATION
+int FRAMERATE = 1; // FPS to calculate the whole algorithm
 
-// Index of the initial shape that the program will cut / Índice forma inicial de los recortes que va a realizar el programa
+// Index of the initial shape that the program will cut
 int SHAPE_MODE = 0; // { "ALL", "ELLIPSE", "RECTANGLE", "TRIANGLE", "ELLIPSE_RECTANGLE", "ELLIPSE_TRIANGLE", "RECTANGLE_TRIANGLE" }
-boolean ALL_SIDES_ARE_EQUAL = true; // Only use shapes that are same-sided (equilateral triangles, squares and circles) / Usar solamente formas con lados iguales (triángulos equiláteros, cuadrados y círculos)
-boolean RANDOM_PASTE = false; // All cut-ups are pasted in random positions (If not, they're pasted in the same position they were cut from) / Todos los recortes se pegan en posiciones al azar (Si no, se pegan en el mismo lugar del que se tomaron en la imágen)
-boolean MOUSE_CUT = false; // Cut-ups are based on mouse position / Hacer recortes según la posición del mouse
-boolean MOUSE_PASTE = false; // Cut-ups are pasted on mouse position / Pegar los recortes según la posición del mouse
-boolean MOUSE_CUT_RANGE_ENABLED = false; // Cut-ups are taken from a range around the mouse if mouse cut is active / Los recortes se generan en un rango alrededor del mouse si mouse cut está activo
-int MOUSE_CUT_RANGE = 200; // Range of mouse cuts (in pixels) / Rango de los cortes con el mouse (en píxeles)
-boolean MOUSE_PASTE_RANGE_ENABLED = false; // Cut-ups are pasted from a range around the mouse if mouse paste is active / Los recortes se pegan en un rango alrededor del mouse si mouse paste está activo
-int MOUSE_PASTE_RANGE = 200; // Range of mouse paste (in pixels) / Rango de los pegados con el mouse (en píxeles)
-int MASKS_PER_FRAME = 1; // Cut-ups made (and pasted) per frame / Recortes (y pegados) hechos por frame
-int MIN_SHAPE_SIDE_SIZE = 50; // Minimum size for each shape (in pixels) / Mínimo tamaño para cada figura (en píxeles)
-int MAX_SHAPE_SIDE_SIZE = 0; // Maximum size for each shape (in pixels). If the value is 0, it will be random / Máximo tamaño para cada figura (en píxeles). Si el valor es 0, va a tomar un valor al azar
-int MIN_SHAPE_SIDE_RATIO = 16; // Minimum size for each shape (ratio calculated from max between width/height of the images) / Mínimo tamaño para cada figura (basado en un ratio calculado del valor máximo entre la altura y el ancho de las imágenes)
-int MAX_SHAPE_SIDE_RATIO = 8; // Maximum size for each shape (ratio calculated from max between width/height of the images) / Máximo tamaño para cada figura (basado en un ratio calculado del valor máximo entre la altura y el ancho de las imágenes)
-boolean RANDOM_IMAGE_ON_RESET = true; // Maximum size for each shape (ratio calculated from max between width/height of the images) / Máximo tamaño para cada figura (basado en un ratio calculado del valor máximo entre la altura y el ancho de las imágenes)
+boolean ALL_SIDES_ARE_EQUAL = true; // Only use shapes that are same-sided (equilateral triangles, squares and circles)
+boolean RANDOM_PASTE = false; // All cut-ups are pasted in random positions (If not, they're pasted in the same position they were cut from)
+boolean MOUSE_CUT = false; // Cut-ups are based on mouse position
+boolean MOUSE_PASTE = false; // Cut-ups are pasted on mouse position
+boolean MOUSE_CUT_RANGE_ENABLED = false; // Cut-ups are taken from a range around the mouse if mouse cut is active
+int MOUSE_CUT_RANGE = 200; // Range of mouse cuts (in pixels)
+boolean MOUSE_PASTE_RANGE_ENABLED = false; // Cut-ups are pasted from a range around the mouse if mouse paste is active
+int MOUSE_PASTE_RANGE = 200; // Range of mouse paste (in pixels)
+int MASKS_PER_FRAME = 1; // Cut-ups made (and pasted) per frame
+int MIN_SHAPE_SIDE_SIZE = 50; // Minimum size for each shape (in pixels)
+int MAX_SHAPE_SIDE_SIZE = 0; // Maximum size for each shape (in pixels). If the value is 0, it will be random
+int MIN_SHAPE_SIDE_RATIO = 16; // Minimum size for each shape (ratio calculated from max between width/height of the images)
+int MAX_SHAPE_SIDE_RATIO = 8; // Maximum size for each shape (ratio calculated from max between width/height of the images)
+boolean RANDOM_IMAGE_ON_RESET = true; // Maximum size for each shape (ratio calculated from max between width/height of the images)
 
 
 // CLOCK CONFIGURATION / CONFIGURACIÓN DEL RELOJ
-boolean TIMEOUT = true; // Capture images in time intervals / Capturar imágenes en intervalos de tiempo
-boolean RESET_ON_TIMEOUT = true; // Reset after the timeout runs / Reiniciar al finalizar el intervalo de tiempo
+boolean TIMEOUT = true; // Capture images in time intervals
+boolean RESET_ON_TIMEOUT = true; // Reset after the timeout runs
 int FIXED_INTERVAL = 0; // Image interval
-int INTERVAL_MIN_MINUTES = 1; // Minimum amount of minutes before each random timeout / Mínima cantidad de minutos antes de un intervalo al azar
-int INTERVAL_MAX_MINUTES = 10; // Maximum amount of minutes that can ellapse for each random timeout / Máxima cantidad de minutos que puede durar un intervalo al azar
+int INTERVAL_MIN_MINUTES = 1; // Minimum amount of minutes before each random timeout
+int INTERVAL_MAX_MINUTES = 10; // Maximum amount of minutes that can ellapse for each random timeout
 
-// INTERNAL VARIABLES - DON'T TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING / VARIABLES INTERNAS - NO TOCAR AL MENOS QUE SEPAS LO QUE ESTÁS HACIENDO
+// INTERNAL VARIABLES - DON'T TOUCH UNLESS YOU KNOW WHAT YOU'RE DOING
 boolean paused = false;
 int imageWidth = 0, imageHeight = 0;
 int ellapsed;
